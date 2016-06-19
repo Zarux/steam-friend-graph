@@ -1,7 +1,7 @@
 # steam-friend-graph
 
 Displays your friends and your friends friends as nodes and the friendship as edges.
-This is mye graph:
+This is my graph:
 ![Example](http://i.imgur.com/rls03Yn.png)
 The red node is my steam-profile
 
@@ -12,7 +12,7 @@ The red node is my steam-profile
   * Takes a steam id, crawls the friendlist (maybe switch to steam API) and creates frienddata.
   * Using pygexf to create .gexf file
   * Runs a Java program that uses gephi-toolkit to rank nodes and change layout
-  * Using a modified version of [This script](http://grep.law.harvard.edu/~hroberts/sigma/sigma.js-master/plugins/gexf2Json.py) reads the layouted .gexf and creates a .json file 
+  * Using a modified version of [this script](http://grep.law.harvard.edu/~hroberts/sigma/sigma.js-master/plugins/gexf2Json.py) to read the layouted .gexf, and create a .json file 
   * Not caching friendlists YET, should add that
 * server.js/web
  * Not complete
