@@ -56,17 +56,27 @@ function createGraph(data,id){
 		toKeep[nodeId] = e.data.node;
 
 		s.graph.nodes().forEach(function(n) {
-			if (toKeep[n.id])
+			if(n.id == id){
+				n.color = "rgb(0,255,0)"
+			}
+			else if (toKeep[n.id])
 				n.color = n.originalColor;
 			else
 				n.color = '#272727';
 		});
 
-		s.graph.edges().forEach(function(e) {
-			if (toKeep[e.source] && toKeep[e.target])
-				e.color = e.originalColor;
-			else
-				e.color = '#272727';
+		s.graph.edges().forEach(function(e2) {
+			if (e.data.node.id == e2.source || e.data.node.id == e2.target) {
+				e2.color = 'rgb(200,200,10)';
+			}
+			else if (toKeep[e2.source] && toKeep[e2.target]){
+				e2.color = "rgb(200,10,10)";
+			}
+			else{
+				e2.color = '#272727';
+			}
+			
+
 		});
 
 		s.refresh();
