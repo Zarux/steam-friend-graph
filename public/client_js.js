@@ -15,7 +15,7 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
 
 socket.on("retData",function(retData){
 	//console.log(data);
-	console.log("answer")
+	console.log("answer",Object.keys(retData.data).length)
 	if(Object.keys(retData.data).length != 0){
 		if(current_graph){
 			clear_graph(current_graph)
