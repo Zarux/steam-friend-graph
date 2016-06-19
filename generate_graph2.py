@@ -98,61 +98,6 @@ def additionalFriends(userdata):
 			userdata_tmp[i[0]]["friends"] = getFriendList(i[0])
 
 	return userdata_tmp
-def makeNodes(userdata, user):
-	#global G
-	node_data = {"nodes":[],"edges":[]}
-	nodes = []
-	for i in userdata:
-		s_id = i
-		s_name = userdata[i]["name"]
-		#G.add_node(s_id,label=s_name)
-		if s_id not in nodes:
-			nodes.append(s_id)
-			x = random.randint(-5000,5000)
-			y = random.randint(-5000,5000)
-			node_data["nodes"].append({
-					"id":s_id,
-					"label":s_name,
-					"size": 100+(len(userdata[i]["friends"])*2),
-					"x":x,
-					"y":y,
-					"color":"rgb(60,255,158)"
-				})
-		for j in userdata[i]["friends"]:
-			target_name = j[1]
-			target_id = j[0]
-			if target_id not in nodes:
-				nodes.append(target_id)
-				node_data["nodes"].append({
-					"id":target_id,
-					"label":target_name,
-					"size": 100,
-					"x":random.randint(-5000,5000),
-					"y":random.randint(-5000,5000),
-					"color":"rgb(60,255,158)"
-				})
-
-			node_data["edges"].append({
-				"source":s_id,
-				"target":target_id,
-				"id":str(s_id)+str(target_id),
-				"color":"black",
-				"size":0.5
-			})
-			print '\r Nodes: {} Edges: {} '.format(len(node_data["nodes"]),len(node_data["edges"])),
-			sys.stdout.flush()
-
-			#G.add_node(target_id,label=target_name)
-			#G.add_edge(s_id,target_id)
-	#G = nx.spring_layout(G)
-	#print G
-	f = open("steam_"+user+".json","w+")
-	#print json_graph.node_link_data(G)
-	f.write(json.dumps(node_data))
-	f.close()
-
-
-
 
 def toGefx(userdata,user):
 	import gexf
@@ -166,8 +111,6 @@ def toGefx(userdata,user):
 		s_name = userdata[i]["name"]
 		if s_id not in nodes and s_id != user:
 			nodes.append(s_id)
-			x = random.randint(-5000,5000)
-			y = random.randint(-5000,5000)
 			graph.addNode(s_id,s_name)
 		for j in userdata[i]["friends"]:
 			target_name = j[1]

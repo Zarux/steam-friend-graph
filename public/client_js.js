@@ -1,3 +1,9 @@
+$(document).ready(function(){
+	$('#inputBox').keypress(function(e){
+		if(e.keyCode==13)
+			$('#search_submit').click();
+	});
+});
 
 var socket = io.connect(window.location.hostname+":8000");
 var current_graph;
@@ -26,8 +32,8 @@ socket.on("retData",function(retData){
 });
 
 
-if(location.href.indexOf("?id=") > -1){
-	var id = location.href.replace(/.*?\?id=([\w]*).*/,"$1");
+if(getQueryParam("id")){
+	var id = getQueryParam("id");
 	$("#id_input").val(id);
 	socket.emit('generate',{
 		'id':id
@@ -121,4 +127,11 @@ function search(){
 	socket.emit('generate',{
 		'id':id
 	});
+}
+function getQueryParam(param) {
+	var result =  window.location.search.match(
+		new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)")
+	);
+
+	return result ? result[3] : false;
 }

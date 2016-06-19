@@ -1,10 +1,11 @@
 var connect = require('connect');
 var fs = require('fs');
 var serveStatic = require('serve-static'); 
-var app = connect(); 
+var app = connect();
 var exec = require('child_process').exec
 app.use(serveStatic('../public')); 
 app.listen(5000);
+
 
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
@@ -13,8 +14,7 @@ console.log("Server running on port: ",8000)
 io.sockets.on('connection', function (socket) {
 
 	var clientIp = socket.request.connection.remoteAddress
-	console.log("Connected: " + clientIp);
-
+	console.log("Connected",clientIp);
 	socket.on('generate', function (data) {
 		var id = data.id.toLowerCase();
 		if(!isFile('../graphs/steam_'+id+'.gexf.json')){
