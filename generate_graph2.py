@@ -22,6 +22,10 @@ user = ""
 #G=nx.Graph()
 
 def main(user):
+	fname = "graphs/steam_"+user+".gexf.json"
+	file=open(fname,"w+")
+	file.write("{}")
+	file.close()
 	url = getFriendUrl(user)
 	resp = requests.get(url)
 	html = resp.text

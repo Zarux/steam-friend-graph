@@ -19,7 +19,8 @@ socket.on("retData",function(retData){
 	if(current_graph){
 		clear_graph(current_graph)
 	}
-	createGraph(retData.data,retData.id);	
+	if(Object.keys(retData.data).length != 0)
+		createGraph(retData.data,retData.id);	
 });
 
 
@@ -90,12 +91,14 @@ function createGraph(data,id){
 		s.graph.edges().forEach(function(e) {
 			e.color = e.originalColor;
 		});
-			s.refresh();
+		s.refresh();
 	});
 }
 
 function clear_graph(s) {
-	$("#container")
+	$('#container').children().each(function(){
+		this.remove();
+	});
     //this gets rid of all the ndoes and edges
     s.graph.clear();
     //this gets rid of any methods you've attached to s.
@@ -103,9 +106,7 @@ function clear_graph(s) {
 };
 
 function search(){
-	var canvas = $('#container').children().each(function(){
-		this.remove();
-	}); // or document.getElementById('canvas');
+	 // or document.getElementById('canvas');
 	
 	var id = $("#id_input").val();
 	if(id.length <= 0){
