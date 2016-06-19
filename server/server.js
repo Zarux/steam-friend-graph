@@ -28,7 +28,11 @@ io.sockets.on('connection', function (socket) {
 				console.log(`stdout: ${stdout}`);
 				console.log(`stderr: ${stderr}`);
 				console.log("DONE WITH GENERATING FOR ",id);
+				var data = JSON.parse(fs.readFileSync('../graphs/steam_'+id+'.gexf.json', 'utf8'));
+				var retData={"id":id,"data":data}
+				socket.emit("retData",retData);
 			});
+
 		}else{
 			var data = JSON.parse(fs.readFileSync('../graphs/steam_'+id+'.gexf.json', 'utf8'));
 			var retData={"id":id,"data":data}
