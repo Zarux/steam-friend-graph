@@ -6,14 +6,15 @@
 <div id="container"></div>
 <div id="inputBox">
   <div id="innerInputBox">
-    <input type="text" placeholder="Steam ID" />
-    <button>Search</button>
+    <input type="text" placeholder="Steam ID" id = "id_input"/>
+    <button onclick="search()">Search</button>
   </div>
 </div>
 <script src='/socket.io/socket.io.js'></script> 
 <script src="build/sigma.min.js"></script>
 <script src="build/plugins/sigma.parsers.json.min.js"></script>
 <script src="build/plugins/sigma.parsers.gexf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="client_js.js"></script>
 
 </body>

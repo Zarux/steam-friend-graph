@@ -26,14 +26,17 @@ def main(user):
 	resp = requests.get(url)
 	html = resp.text
 	friend_list = getFriendList(user)
+	if len(friend_list) == 0:
+		print "Error 1"
+		sys.exit(1)
 	userdata[user]={"friends":friend_list,"name":"ME"}
 	#print userdata[user]["friends"]
 	count = 0 
 	for i in userdata[user]["friends"]:
 		count += 1
-		print count,
-		print "/",
-		print len(userdata[user]["friends"])	
+		#print count,
+		#print "/",
+		#print len(userdata[user]["friends"])	
 		userdata[i[0]] = {"friends":[],"name":i[1]}
 		userdata[i[0]]["friends"] = getFriendList(i[0])
 
@@ -59,7 +62,8 @@ def getFriendList(s_id):
 	html = resp.text
 	soup = BeautifulSoup(html, 'html.parser')
 	friendboxes = soup.find_all("div", class_="friendBlock")
-	print url
+	print "\r"+url,
+	sys.stdout.flush()
 	count = 0
 	for i in friendboxes:
 		url = i.find_all("a",class_="friendBlockLinkOverlay")[0]["href"]
@@ -193,8 +197,7 @@ def convertToJson(fname):
 
 if __name__ == '__main__':
 	now = time.time()
-	user = "Zaruxx"
-	user = sys.argv[1]
+	user = sys.argv[1].lower()
 	users = main(user)
 	#makeNodes(users,user)
 	fname = toGefx(users,user)
