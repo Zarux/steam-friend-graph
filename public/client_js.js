@@ -17,10 +17,10 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
 
 socket.on("retData",function(data){
 	console.log(data);
-	createGraph(data);
+	createGraph(data,"Zaruxx");
 })
 
-function createGraph(data){
+function createGraph(data,id){
 	var s = new sigma({ 
 		graph: data,
 		container: 'container',
@@ -30,7 +30,7 @@ function createGraph(data){
 	});
 	s.graph.nodes().forEach(function(n) {
 		console.log(n)
-		if(n.id == ekstraName){
+		if(n.id == id){
 			n.color = "rgb(255,0,0)"
 		}
 		n.originalColor = n.color;
