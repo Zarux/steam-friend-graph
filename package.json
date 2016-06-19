@@ -1,0 +1,21 @@
+{
+  "name": "steam-friend-graph",
+  "version": "0.5.0",
+  "description": "Generate graphs for your steam network",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joakim Tangnes",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^3.4.1",
+    "socket.io": "^1.4.6"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "steam",
+    "graph",
+    "network"
+  ]
+}

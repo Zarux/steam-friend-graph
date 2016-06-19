@@ -1,0 +1,20 @@
+body{
+	background: black;
+}
+#container {
+	height: 1400px;
+	margin: auto;
+}
+#inputBox{
+	position: fixed;
+	height: 100px;
+	width: 300px;
+	border-radius: 30px;
+	top: -50px;
+	left:2%;
+	background: white;
+}
+#innerInputBox{
+	margin-top: 60px;
+	margin-left: 30px;
+}
