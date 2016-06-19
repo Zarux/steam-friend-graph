@@ -77,7 +77,7 @@ def getFriendList(s_id):
 			name = strip_accents(unicode(namebox.get_text().strip().encode('utf-8','ignore')))
 		except UnicodeDecodeError:
 			continue
-		friends.append((steam_id,name))
+		friends.append((steam_id.lower(),name))
 		count += 1
 		if count == 100:
 			return friends
@@ -158,16 +158,16 @@ def toGefx(userdata,user):
 	nodes = []
 	edges = []
 	for i in userdata:
-		s_id = i
+		s_id = i.lower()
 		s_name = userdata[i]["name"]
-		if s_id not in nodes:
+		if s_id not in nodes and s_id != user:
 			nodes.append(s_id)
 			x = random.randint(-5000,5000)
 			y = random.randint(-5000,5000)
 			graph.addNode(s_id,s_name)
 		for j in userdata[i]["friends"]:
 			target_name = j[1]
-			target_id = j[0]
+			target_id = j[0].lower()
 			if target_id not in nodes:
 				nodes.append(target_id)
 				graph.addNode(target_id,target_name)
@@ -202,6 +202,7 @@ if __name__ == '__main__':
 	#makeNodes(users,user)
 	fname = toGefx(users,user)
 	#fname = "graphs/steam_"+user+".gexf"
+	layoutJava(fname)
 	layoutJava(fname)
 	layoutJava(fname)
 	convertToJson(fname)

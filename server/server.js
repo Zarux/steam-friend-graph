@@ -16,7 +16,7 @@ io.sockets.on('connection', function (socket) {
 	console.log("Connected: " + clientIp);
 
 	socket.on('generate', function (data) {
-		var id = data.id;
+		var id = data.id.toLowerCase();
 		if(!isFile('../graphs/steam_'+id+'.gexf.json')){
 			socket.emit("addQueue",id);
 			console.log("START WITH GENERATING FOR ",id);
