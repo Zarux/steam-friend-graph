@@ -16,7 +16,7 @@ io.sockets.on('connection', function (socket) {
 	var clientIp = socket.request.connection.remoteAddress
 	console.log("Connected",clientIp);
 	socket.on('generate', function (data) {
-		var id = data.id.toLowerCase();
+		var id = escapeHtml(data.id.toLowerCase());
 		if(!isFile('../graphs/steam_'+id+'.gexf.json')){
 			socket.emit("addQueue",id);
 			console.log("START WITH GENERATING FOR ",id);
@@ -41,6 +41,15 @@ io.sockets.on('connection', function (socket) {
 		
 	});
 });
+
+function escapeHtml(text) {
+	return text
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+}
 
 
 function isFile(filename) {
