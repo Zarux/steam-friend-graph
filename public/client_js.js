@@ -107,15 +107,11 @@ function clear_graph(s) {
 	$('#container').children().each(function(){
 		this.remove();
 	});
-    //this gets rid of all the ndoes and edges
-    s.graph.clear();
-    //this gets rid of any methods you've attached to s.
-    s.graph.kill();
+	s.graph.clear();
+    	s.graph.kill();
 };
 
 function search(){
-	 // or document.getElementById('canvas');
-	
 	var id = $("#id_input").val();
 	if(id.length <= 0){
 		alert("not valid");
