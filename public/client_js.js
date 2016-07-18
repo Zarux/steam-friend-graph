@@ -3,6 +3,7 @@ $(document).ready(function(){
 		if(e.keyCode==13)
 			$('#search_submit').click();
 	});
+	checkStart()
 });
 
 var socket = io.connect(window.location.hostname+":8000");
@@ -21,6 +22,7 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
 
 socket.on("retData",function(retData){
 	//console.log(data);
+	$("#loading_text").hide();
 	console.log("answer",Object.keys(retData.data).length)
 	if(Object.keys(retData.data).length != 0){
 		if(current_graph){
@@ -31,13 +33,15 @@ socket.on("retData",function(retData){
 	}	
 });
 
-
-if(getQueryParam("id")){
-	var id = getQueryParam("id");
-	$("#id_input").val(id);
-	socket.emit('generate',{
-		'id':id
-	});
+function checkStart(){
+	if(getQueryParam("id")){
+		var id = getQueryParam("id");
+		$("#id_input").val(id);
+		socket.emit('generate',{
+			'id':id
+		});
+		$("#loading_text").show();
+	}
 }
 
 function createGraph(data,id){
@@ -58,6 +62,10 @@ function createGraph(data,id){
 	s.graph.edges().forEach(function(e) {
 		e.originalColor = e.color;
 	});
+	s.bind('doubleClickNode', function(e) {
+		console.log(e.data.node.id);
+		location.href=window.location.origin+"/?id="+e.data.node.id;
+	})
 
 	s.bind('clickNode', function(e) {
 		var nodeId = e.data.node.id,
