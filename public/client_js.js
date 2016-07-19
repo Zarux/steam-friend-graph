@@ -3,7 +3,12 @@ $(document).ready(function(){
 		if(e.keyCode==13)
 			$('#search_submit').click();
 	});
-	checkStart()
+	if($("#id_input").val()!=""){
+		socket.emit('generate',{
+			'id':$("#id_input").val()
+		});
+	}
+	$("#loading_text").show();
 });
 var socket = io.connect(window.location.hostname+":8000");
 var current_graph;
@@ -22,6 +27,9 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
 socket.on("retData",function(retData){
 	$("#loading_text").hide();
 	console.log("answer",Object.keys(retData.data).length)
+	console.log(retData);
+	var url = location.href.replace(/(.*)\/new/,"$1");
+	history.replaceState("","Steam friend graph", url);
 	if(Object.keys(retData.data).length != 0){
 		if(current_graph){
 			clear_graph(current_graph)
@@ -29,15 +37,6 @@ socket.on("retData",function(retData){
 		createGraph(retData.data,retData.id);
 	}	
 });
-
-function checkStart(){
-	if($("#id_input").val()!=""){
-		socket.emit('generate',{
-			'id':$("#id_input").val()
-		});
-		$("#loading_text").show();
-	}
-}
 
 function createGraph(data,id){
 	var s = new sigma({ 

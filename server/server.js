@@ -1,11 +1,13 @@
 var fs = require('fs');
 var serveStatic = require('serve-static'); 
 var express = require('express');
+var path = require("path");
 var app = express();
 var exec = require('child_process').exec
-app.use(express.static("../public"));
+app.use(express.static(path.join(__dirname,"../public")));
+var createNewGraph = {};
+var isGenerating = {};
 
-var path = require("path");
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 server.listen(8000);
@@ -20,6 +22,10 @@ app.get("/", function (req, res) {
 app.get("/:id", function (req, res) {
 	res.render("main.html",{id:escapeHtml(req.params.id)});
 });
+app.get("/:id/new", function (req, res) {
+	res.render("main.html",{id:escapeHtml(req.params.id)});
+	createNewGraph[req.params.id]=true;
+});
 
 io.sockets.on('connection', function (socket) {
 	var clientIp = socket.request.connection.remoteAddress;
@@ -31,10 +37,13 @@ io.sockets.on('connection', function (socket) {
 });
 
 function generate(socket, id){
-	if(!isFile('../graphs/steam_'+id+'.gexf.json')){
+	if(!isFile('../graphs/steam_'+id+'.gexf.json') || createNewGraph[id]){
+		createNewGraph[id] = false;
+		if(isGenerating[id])
+			return
+		isGenerating[id] = true;
 		socket.emit("addQueue",id);
 		console.log("START WITH GENERATING FOR ",id);
-		exec("pwd");
 		exec("cd .. && python generate_graph2.py "+id,function(error,stdout,stderr){
 			if (error) {
 				console.error(`exec error: ${error}`);
@@ -43,15 +52,18 @@ function generate(socket, id){
 			console.log(`stdout: ${stdout}`);
 			console.log(`stderr: ${stderr}`);
 			console.log("DONE WITH GENERATING FOR ",id);
+			isGenerating[id] = false;
 			var data = JSON.parse(fs.readFileSync('../graphs/steam_'+id+'.gexf.json', 'utf8'));
 			var retData={"id":id,"data":data}
 			socket.emit("retData",retData);
 		});
 
 	}else{
-		var data = JSON.parse(fs.readFileSync('../graphs/steam_'+id+'.gexf.json', 'utf8'));
-		var retData={"id":id,"data":data}
-		socket.emit("retData",retData);
+		if(!isGenerating[id]){
+			var data = JSON.parse(fs.readFileSync('../graphs/steam_'+id+'.gexf.json', 'utf8'));
+			var retData={"id":id,"data":data}
+			socket.emit("retData",retData);
+		}
 	}
 }
 function escapeHtml(text) {
