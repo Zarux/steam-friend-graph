@@ -122,17 +122,5 @@ function search(){
 		alert("not valid");
 		return;
 	}
-	var url = location.href;
-	var newurl = url.replace(/(.*?)\?id=[\w]*(.*)/,"$1$2")
-	history.pushState("", id+" graph", newurl+"?id="+id);
-	socket.emit('generate',{
-		'id':id
-	});
-}
-function getQueryParam(param) {
-	var result =  window.location.search.match(
-		new RegExp("(\\?|&)" + param + "(\\[\\])?=([^&]*)")
-	);
-
-	return result ? result[3] : false;
+	location.href=window.location.origin+"/"+id;
 }
