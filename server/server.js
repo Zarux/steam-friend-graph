@@ -14,6 +14,9 @@ console.log("Server running on port: ",8000);
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname,'../public'));
 app.set('view engine', 'html');
+app.get("/", function (req, res) {
+	res.render("index.html",{id:""});
+});
 app.get("/:id", function (req, res) {
 	res.render("index.html",{id:escapeHtml(req.params.id)});
 });
