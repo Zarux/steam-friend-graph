@@ -11,7 +11,9 @@
   "dependencies": {
     "connect": "^3.4.1",
     "socket.io": "^1.4.6",
-    "serve-static":"^1.11.1"
+    "serve-static":"^1.11.1",
+    "express":"^4.14.0",
+    "ejs":"^2.4.2"
   },
   "devDependencies": {},
   "keywords": [

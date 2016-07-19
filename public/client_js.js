@@ -5,7 +5,6 @@ $(document).ready(function(){
 	});
 	checkStart()
 });
-
 var socket = io.connect(window.location.hostname+":8000");
 var current_graph;
 
@@ -34,11 +33,9 @@ socket.on("retData",function(retData){
 });
 
 function checkStart(){
-	if(getQueryParam("id")){
-		var id = getQueryParam("id");
-		$("#id_input").val(id);
+	if($("#id_input").val()!=""){
 		socket.emit('generate',{
-			'id':id
+			'id':$("#id_input").val()
 		});
 		$("#loading_text").show();
 	}
@@ -64,7 +61,7 @@ function createGraph(data,id){
 	});
 	s.bind('doubleClickNode', function(e) {
 		console.log(e.data.node.id);
-		location.href=window.location.origin+"/?id="+e.data.node.id;
+		location.href=window.location.origin+"/"+e.data.node.id;
 	})
 
 	s.bind('clickNode', function(e) {
