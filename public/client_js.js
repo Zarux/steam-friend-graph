@@ -20,14 +20,12 @@ sigma.classes.graph.addMethod('neighbors', function(nodeId) {
 });
 
 socket.on("retData",function(retData){
-	//console.log(data);
 	$("#loading_text").hide();
 	console.log("answer",Object.keys(retData.data).length)
 	if(Object.keys(retData.data).length != 0){
 		if(current_graph){
 			clear_graph(current_graph)
 		}
-		
 		createGraph(retData.data,retData.id);
 	}	
 });
@@ -89,10 +87,7 @@ function createGraph(data,id){
 			else{
 				e2.color = '#272727';
 			}
-			
-
 		});
-
 		s.refresh();
 	});
 

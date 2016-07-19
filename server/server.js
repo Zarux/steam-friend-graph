@@ -3,7 +3,7 @@ var serveStatic = require('serve-static');
 var express = require('express');
 var app = express();
 var exec = require('child_process').exec
-app.use(express.static("../public"))
+app.use(express.static("../public"));
 
 var path = require("path");
 var server = require('http').Server(app);
@@ -15,10 +15,10 @@ app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname,'../public'));
 app.set('view engine', 'html');
 app.get("/", function (req, res) {
-	res.render("index.html",{id:""});
+	res.render("main.html",{id:""});
 });
 app.get("/:id", function (req, res) {
-	res.render("index.html",{id:escapeHtml(req.params.id)});
+	res.render("main.html",{id:escapeHtml(req.params.id)});
 });
 
 io.sockets.on('connection', function (socket) {
